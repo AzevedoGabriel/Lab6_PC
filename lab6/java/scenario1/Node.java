@@ -6,7 +6,7 @@ public class Node implements Runnable {
     private final BlockingQueue<Task> taskQueue;
     private final List<Task> executedTasks;
 
-    public Node(BlockingQueue taskQueue, List<Task> executedTasks) {
+    public Node(BlockingQueue<Task> taskQueue, List<Task> executedTasks) {
       this.taskQueue = taskQueue;
       this.executedTasks = executedTasks;
     }

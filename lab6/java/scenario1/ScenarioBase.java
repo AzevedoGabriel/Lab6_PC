@@ -21,5 +21,16 @@ public class ScenarioBase {
             Node node = new Node(taskQueue, executedTasks);
             executor.execute(node);
         }
+
+        ScheduledExecutorService reportSchedule = Executors.newScheduledThreadPool(1);
+        reportSchedule.scheduleAtFixedRate(() -> {
+            System.out.println("Report de Tasks");
+            for(TaskProducer producer: producers){
+                producer.report(executedTasks);
+                System.out.println("================");
+            }
+        }, 5, 5, TimeUnit.SECONDS);
+
+        executor.shutdown();
     }
 }

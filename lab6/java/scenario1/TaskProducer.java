@@ -1,20 +1,16 @@
 import java.util.List;
 import java.util.concurrent.*;
 
-import javax.sound.midi.Soundbank;
-
 public class TaskProducer implements Runnable {
     private final BlockingQueue<Task> taskQueue;
-    private final List<Task> executedTasks;
     private final long productionInterval;
     private final int id;
     private long idCounter = 0;
 
-    public TaskProducer(int id, BlockingQueue taskQueue, long productionInterval) {
+    public TaskProducer(int id, BlockingQueue<Task> taskQueue, long productionInterval) {
         this.id = id;
         this.taskQueue = taskQueue;
         this.productionInterval = productionInterval;
-        this.executedTasks = new CopyOnWriteArrayList<>();
     }
 
     @Override
