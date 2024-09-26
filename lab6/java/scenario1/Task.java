@@ -7,6 +7,10 @@ public class Task {
         this.id = id;
     }
 
+    public long getId() {
+        return this.id;
+    }
+
     public void execute() {
         try {
             // generating a number between 1000 and 15000
