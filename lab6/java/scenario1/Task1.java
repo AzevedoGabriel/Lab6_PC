@@ -1,11 +1,11 @@
 import java.util.Random;
 
-public class Task {
+public class Task1 {
     long id;
     private final long creationTime;
     private final int producerId;
 
-    public Task(long id, int producerId) {
+    public Task1(long id, int producerId) {
         this.id = id;
         this.producerId = producerId;
         this.creationTime = System.currentTimeMillis();

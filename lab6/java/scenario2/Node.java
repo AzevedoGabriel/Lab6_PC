@@ -3,10 +3,10 @@ import java.util.concurrent.*;
 
 public class Node implements Runnable {
 
-    private final BlockingQueue<Task1> taskQueue;
-    private final List<Task1> executedTasks;
+    private final BlockingQueue<Task> taskQueue;
+    private final List<Task> executedTasks;
 
-    public Node(BlockingQueue<Task1> taskQueue, List<Task1> executedTasks) {
+    public Node(BlockingQueue<Task> taskQueue, List<Task> executedTasks) {
       this.taskQueue = taskQueue;
       this.executedTasks = executedTasks;
     }
@@ -15,7 +15,7 @@ public class Node implements Runnable {
     public void run() {
       while(true) {
         try {
-          Task1 task = taskQueue.take();
+          Task task = taskQueue.take();
           System.out.println("Node processando tarefa: " + task.getId());
 
           task.execute();

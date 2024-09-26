@@ -5,15 +5,22 @@ import java.util.concurrent.*;
 public class ScenarioBase {
 
     public static void main(String[] args) {
-        BlockingQueue<Task1> taskQueue = new LinkedBlockingQueue<>();
-        List<TaskProducer1> producers = new ArrayList<>();
-        List<Task1> executedTasks = new CopyOnWriteArrayList<>();
+        BlockingQueue<Task> taskQueue = new LinkedBlockingQueue<>();
+        List<TaskProducer> producers = new ArrayList<>();
+        List<Task> executedTasks = new CopyOnWriteArrayList<>();
 
         ExecutorService executor = Executors.newCachedThreadPool();
 
-        for(int i = 0; i < 5; i++)  {
-            TaskProducer1 producer = new TaskProducer1(i, taskQueue, 5000);
-            producers.add(producer);
+        
+        TaskProducer producer1 = new TaskProducer(taskQueue, 13000, 0);
+        TaskProducer producer2 = new TaskProducer(taskQueue, 7000, 1);
+        TaskProducer producer3 = new TaskProducer(taskQueue, 3000, 2);
+
+        producers.add(producer1);
+        producers.add(producer2);
+        producers.add(producer3);
+
+        for(TaskProducer producer: producers)  {
             executor.execute(producer);
         }
 
@@ -26,8 +33,9 @@ public class ScenarioBase {
         reportSchedule.scheduleAtFixedRate(() -> {
             System.out.println("Report de Tasks");
             System.out.println("------------------");
-            for(TaskProducer1 producer: producers){
+            for(TaskProducer producer: producers){
                 producer.report(executedTasks);
+                
             }
         }, 5, 5, TimeUnit.SECONDS);
 

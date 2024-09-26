@@ -1,13 +1,13 @@
 import java.util.List;
 import java.util.concurrent.*;
 
-public class TaskProducer implements Runnable {
-    private final BlockingQueue<Task> taskQueue;
+public class TaskProducer1 implements Runnable {
+    private final BlockingQueue<Task1> taskQueue;
     private final long productionInterval;
     private final int id;
     private long idCounter = 0;
 
-    public TaskProducer(int id, BlockingQueue<Task> taskQueue, long productionInterval) {
+    public TaskProducer1(int id, BlockingQueue<Task1> taskQueue, long productionInterval) {
         this.id = id;
         this.taskQueue = taskQueue;
         this.productionInterval = productionInterval;
@@ -17,7 +17,7 @@ public class TaskProducer implements Runnable {
     public void run() {
         while (true) {
             try {
-                Task task = new Task(++idCounter, id);
+                Task1 task = new Task1(++idCounter, id);
                 taskQueue.put(task);
                 System.out.println("Tarefa " + task.getId() + " produzida.");
                 Thread.sleep(productionInterval);
@@ -27,13 +27,13 @@ public class TaskProducer implements Runnable {
         }
     }
 
-    public void report(List<Task> executedTasks) {
+    public void report(List<Task1> executedTasks) {
         System.out.println("Report do Produtor " + this.id);
 
         long totalTime = 0;
         int taskCount = 0;
 
-        for(Task task : executedTasks) {
+        for(Task1 task : executedTasks) {
             if(task.getProducerId() == this.id) {
                 System.out.println("Tarefa " + task.getId() + "executada por " + task.getActiveTime());
                 totalTime += task.getActiveTime();
