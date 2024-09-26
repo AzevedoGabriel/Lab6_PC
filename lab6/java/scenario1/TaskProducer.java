@@ -1,7 +1,11 @@
+import java.util.List;
 import java.util.concurrent.*;
+
+import javax.sound.midi.Soundbank;
 
 public class TaskProducer implements Runnable {
     private final BlockingQueue<Task> taskQueue;
+    private final List<Task> executedTasks;
     private final long productionInterval;
     private final int id;
     private long idCounter = 0;
@@ -10,6 +14,7 @@ public class TaskProducer implements Runnable {
         this.id = id;
         this.taskQueue = taskQueue;
         this.productionInterval = productionInterval;
+        this.executedTasks = new CopyOnWriteArrayList<>();
     }
 
     @Override
@@ -24,5 +29,28 @@ public class TaskProducer implements Runnable {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void report(List<Task> executedTasks) {
+        System.out.println("Report do Produtor " + this.id);
+
+        long totalTime = 0;
+        int taskCount = 0;
+
+        for(Task task : executedTasks) {
+            if(task.getProducerId() == this.id) {
+                System.out.println("Tarefa " + task.getId() + "executada por " + task.getActiveTime());
+                totalTime += task.getActiveTime();
+                taskCount++;
+            }
+        }
+
+        if(taskCount > 0) {
+            long averageTime = totalTime / taskCount;
+            System.out.println("Média de tempo " + averageTime);
+        } else {
+            System.out.println("Não tem tarefas produzidas por esse produtor");
+        }
+
     }
 }
